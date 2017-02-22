@@ -951,15 +951,17 @@ function _webform_report_format_data($raw, $column) {
   elseif ($column['type'] == 'select') {
     $data = '';
     $sort = '';
+    $countme=1;
     $multi_count=false;//added by jon 20170222
-    if(count($raw)>1) $multi_count=true;//added by jon 20170222
-
+    if(count($raw)>2) $multi_count=true;//added by jon 20170222
+    //drupal_set_message('count($raw) ='.count($raw));
     if($multi_count)$data = '#1# ' ;//added by jon 20170222
     // process each key in case of multi-selects
     for ($i=0; $i<count($raw); $i++) {
       if ($i > 0) {
         $data .= ',';
         $sort .= ',';
+        if($multi_count) { $countme++ ;  $data .= "<br>#$countme#";        } //jon mod 170222
       }
       // save key value
       $key = $raw[$i];
@@ -1001,7 +1003,7 @@ function _webform_report_format_data($raw, $column) {
         if($multi_count)$raw_entries .= '@#'. $countme .'# - '. $element . ',<BR>';
         $countme++;
     });
-    drupal_set_message('  $raw_entries='.$raw_entries .' $countme='.$countme . 'count($raw) ='.count($raw));
+    //drupal_set_message('  $raw_entries='.$raw_entries .' $countme='.$countme . 'count($raw) ='.count($raw));
     if($countme<3)$raw_entries=implode(',', $raw);
     //------jon 170222--------------
 
