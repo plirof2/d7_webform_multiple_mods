@@ -990,18 +990,18 @@ function _webform_report_format_data($raw, $column) {
   else {
     //++++++jon fix 170222++++++++++++++
     $multi_count=false;//added by jon 20170222
-    print_r($raw);
+    //print_r($raw);
     if(count($raw)>1) $multi_count=true;//added by jon 20170222
-    if($multi_count==true) drupal_set_message("else { multi_count=true" )   ;
+    //if($multi_count==true) drupal_set_message("else { multi_count=true" )   ;
     $countme = 1;
     $raw_entries='';
     $data=$raw;
-    array_walk($data, function ($element) use (&$raw_entries, &$countme) {
-        //if($multi_count==true)
-        $raw_entries .= '@#'. $countme .'# - '. $element . ',<BR>';
+    array_walk($data, function ($element) use (&$raw_entries, &$countme, &$multi_count) {
+      //drupal_set_message('$multi_count='.$multi_count);
+        if($multi_count)$raw_entries .= '@#'. $countme .'# - '. $element . ',<BR>';
         $countme++;
     });
-    drupal_set_message('  $raw_entries='.$raw_entries .' $countme='.$countme);
+    drupal_set_message('  $raw_entries='.$raw_entries .' $countme='.$countme . 'count($raw) ='.count($raw));
     if($countme<3)$raw_entries=implode(',', $raw);
     //------jon 170222--------------
 
